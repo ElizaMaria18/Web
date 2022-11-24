@@ -2,49 +2,74 @@
 export default {
   data() {
     return {
-      deckData: null,
-      cardData: null,
-      deckCardsData: [],
+      nasaData: null,
+      nasaTitle: null,
+      nasaExplanation:null,
+      nasaDate:null,
     };
   },
   methods: {
-    fetchDeck() {
+    fetchNasa() {
       const Url =
-        "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1";
+        "https://api.nasa.gov/planetary/apod?api_key=sLV88CdBRYRX7E27aeuop6y8fyY1SXNkDkKzDyvD";
       fetch(Url)
         .then((response) => response.json())
         .then((data) => {
-          this.deckData = data;
-          this.deckCards = null;
-          this.deckCardsData = [];
+          this.nasaData = data;
+          this.nasaTitle = data.title;
+          this.nasaExplanation=data.explanation;
+          this.nasaDate=data.date;
         });
     },
-    fetchCard(deckId) {
-      const Url = `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`;
-      fetch(Url)
-        .then((response) => response.json())
-        .then((data) => {
-          this.cardData = data;
-          this.deckCardsData = [];
-        });
-    },
-    fetchAllCards(deckId, remaining) {
-      const Url = `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=
-        ${remaining}`;
-      fetch(Url)
-        .then((response) => response.json())
-        .then((data) => {
-          this.deckCardsData = data.cards;
-        });
-    },
+
+    // fetchCard(deckId) {
+    //   const Url = `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`;
+    //   fetch(Url)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       this.cardData = data;
+    //       this.deckCardsData = [];
+    //     });
+    // },
+    // fetchAllCards(deckId, remaining) {
+    //   const Url = `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=
+    //     ${remaining}`;
+    //   fetch(Url)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       this.deckCardsData = data.cards;
+    //     });
+    // },
   },
 };
 </script>
 
 <template>
-  <v-btn @click="fetchDeck"
+  <v-btn @click="fetchNasa"
     >Get my Deck <v-icon icon="mdi-plus"></v-icon
   ></v-btn>
+  {{ $data }}
+
+  <div v-if="nasaData">
+    <h1>{{ nasaTitle }}</h1>
+    <h2>{{nasaDate}}</h2>
+    <h3> {{nasaExplanation}}
+    
+      <v-img
+        class="bg-white"
+        width="100"
+        :aspect-ratio="1"
+        :src="nasaData.url"
+      />
+    </h3>
+<h4>{{nasaData.copyright}}</h4>
+
+  </div>
+
+
+
+
+
   <div v-if="deckData">
     <v-btn variant="outlined" @click="fetchCard(deckData.deck_id)"
       >Get my Card<v-icon icon="mdi-atom"></v-icon

@@ -40,7 +40,7 @@ export default {
 <template>
   <main>
     <v-app>
-      <v-app-bar title="My Deck">
+      <v-app-bar title="Nasa News">
         <v-btn href="#/" icon="mdi-home"></v-btn>
         <v-btn href="#/deck" icon="mdi-cards"></v-btn>
         <v-btn @click="toggleTheme" icon="mdi-animation"></v-btn>
@@ -55,5 +55,7 @@ export default {
 <style scoped>
 header {
   line-height: 1.5;
+  background-color: darkblue;
 }
+
 </style>

@@ -1,11 +1,13 @@
 <script>
 export default {
+ 
   data() {
     return {
       nasaData: null,
       nasaTitle: null,
       nasaExplanation:null,
       nasaDate:null,
+      width: 300,
     };
   },
   methods: {
@@ -42,67 +44,48 @@ export default {
     // },
   },
 };
+
+
+
 </script>
 
 <template>
   <v-btn @click="fetchNasa"
-    >Get my Deck <v-icon icon="mdi-plus"></v-icon
+    >What happend today? <v-icon icon="mdi-plus"></v-icon
   ></v-btn>
-  {{ $data }}
-
+ 
   <div v-if="nasaData">
-    <h1>{{ nasaTitle }}</h1>
-    <h2>{{nasaDate}}</h2>
-    <h3> {{nasaExplanation}}
+
+    <h1 class="elements_h">{{ nasaTitle }}</h1>
+    <h2 class="elements_h">{{nasaDate}}</h2>
+    <h3 class="elements_h"> {{nasaExplanation}}</h3>
     
       <v-img
         class="bg-white"
-        width="100"
+        width="250"
         :aspect-ratio="1"
         :src="nasaData.url"
       />
-    </h3>
-<h4>{{nasaData.copyright}}</h4>
 
+  <div class="d-flex flex-column justify-space-between align-center">
+    <v-slider
+      v-model="width"
+      class="align-self-stretch"
+      min="200"
+      max="500"
+      step="1"
+    ></v-slider>
+
+    <v-img
+      :aspect-ratio="16/9"
+      :width="width"
+      :src="nasaData.url"
+    ></v-img>
   </div>
 
+    
+<h4>{{nasaData.copyright}}</h4>
 
-
-
-
-  <div v-if="deckData">
-    <v-btn variant="outlined" @click="fetchCard(deckData.deck_id)"
-      >Get my Card<v-icon icon="mdi-atom"></v-icon
-    ></v-btn>
-    <div v-if="cardData">
-      <v-img
-        class="bg-white"
-        width="100"
-        :aspect-ratio="1"
-        :src="cardData.cards[0].image"
-      />
-    </div>
-    <v-btn
-      variant="tonal"
-      @click="fetchAllCards(deckData.deck_id, deckData.remaining)"
-    >
-      Get all Cards <v-icon icon="mdi-auto-fix"></v-icon>
-    </v-btn>
-    <v-row v-if="deckCardsData.length > 0">
-      <v-col
-        v-for="(card, index) in deckCardsData"
-        :key="index"
-        class="d-flex child-flex"
-        cols="2"
-      >
-        <v-img
-          class="bg-grey-lighten-2"
-          cover
-          :aspect-ratio="0"
-          :src="card.image"
-        />
-      </v-col>
-    </v-row>
   </div>
 </template>
 
@@ -111,4 +94,13 @@ img {
   float: left;
   margin-right: -160px;
 }
+h1{
+  padding-top: 25px;
+  padding-left: 42%;
+}
+
+h2{
+ padding-left: 90%;
+}
+
 </style>
